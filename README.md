@@ -1,2 +1,2 @@
-# Tanner Helton
-Repo for projects in the tannerhelton.com domain
+# Spyfall - Tanner Helton
+Repo for the game spyfall at https://spyfall.tannerhelton.com
