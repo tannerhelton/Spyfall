@@ -1,18 +1,9 @@
 $(document).ready(function() {
   var socket = io.connect();
-
-  socket.on("welcome", function(data) {
-    $("#log").append("<div><strong>" + data.text + "</strong></div>");
-  });
   var name;
 
   $("#user-save").click(function() {
     console.log("click");
-    // if () {
-    //     io.on('connection', function (socket) {
-    //         socket.join('room1');
-    //     });
-    // }
     var username = $("#user-name");
     var txt = username.val().trim();
     console.log(txt);
@@ -25,11 +16,12 @@ $(document).ready(function() {
       $("#message").prop("disabled", false);
       $("#send").prop("disabled", false);
       socket.emit("user", name);
+      $("#usernames").append("<div><strong>" + name + "</strong></div>");
     }
   });
 
   socket.on("otherUserConnect", function(data) {
-    $("#log").append("<div><strong>" + data + " connected</strong></div>");
+    $("#usernames").append("<div><strong>" + data + "</strong></div>");
   });
 
   socket.on("otherUserDisconnect", function(data) {

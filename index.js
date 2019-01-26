@@ -6,10 +6,6 @@ var app = express();
 var http = require("http").Server(app);
 
 app.use(express.static(path.join(__dirname, "client")));
-//app.use(express.static(path.join(__dirname, "public")));
-//app.set("views", path.join(__dirname, "views"));
-//app.set("view engine", "ejs");
-//app.get("/", (req, res) => res.render("pages/index"));
 
 var server = http.listen(PORT, function() {
   console.log("Server listening on tannerhelton.com:" + PORT);
@@ -25,10 +21,6 @@ nsp.on("connection", function(socket) {
 nsp.emit("hi", "everyone!");
 
 io.sockets.on("connection", function(socket) {
-  socket.emit("welcome", {
-    text: "You have been connected!"
-  });
-
   socket.on("user", function(name) {
     console.log(name + " connected");
     users.push(name);

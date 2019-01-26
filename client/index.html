@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Node Chat</title>
+    <title>Spyfall - Tanner Helton</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link rel="stylesheet" href="main.css">
@@ -11,27 +11,30 @@
 
 <body>
     <div id="content">
-        <h1>Chat</h1>
+        <center><h1>Spyfall</h1></center>
+        <hr>
         <div id="user">
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Name: </span>
                 <input id="user-name" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
             </div>
         </div>
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <div class="btn-group" role="group">
-                <button id="group" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Groups</button>
-                <div class="dropdown-menu" aria-labelledby="group">
-                    <a id="room1" class="dropdown-item" href="#">Room 1</a>
-                    <a id="room2" class="dropdown-item" href="#">Room 2</a>
-                </div>
+        <br>
+        <div id="gameCode">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Game code: </span>
+                <input id="gameCodeText" type="text" class="form-control" placeholder="Game code" aria-describedby="basic-addon1">
             </div>
         </div>
         <br>
-        <button id="user-save" class="btn btn-primary">Save</button>
-        <br>
+        <button id="user-save" class="btn btn-primary">Login</button>
+        <hr>
+        <div id="usernames">
+          <div class="msgLog"><strong>Users:</strong></div>
+        </div>
+        <hr>
         <div id="log">
-            <div class="msgLog"><strong>Chat:</strong></div>
+            <div class="msgLog"><strong>Game:</strong></div>
         </div>
         <br>
         <div id="controls">
