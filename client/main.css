@@ -1,0 +1,25 @@
+#content {
+  margin: auto;
+  width: 75%;
+  font-family: 'Open Sans', sans-serif;
+  color: #000000;
+}
+
+.msgLog {
+  font-size: 25px;
+}
+
+.btn {
+  margin-top: 5px;
+}
+
+#log {
+  border: solid white 1px;
+  margin: auto;
+  font-family: 'Open Sans', sans-serif;
+  color: #000000;
+}
+
+#controls {
+  display: none;
+}
