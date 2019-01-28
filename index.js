@@ -11,22 +11,24 @@ var server = http.listen(PORT, function() {
   console.log("Server listening on tannerhelton.com:" + PORT);
 });
 
-var users = [];
+var games = [];
 
 var io = require("socket.io").listen(server);
-var nsp = io.of("/room1");
-nsp.on("connection", function(socket) {
-  console.log("someone connected");
-});
-nsp.emit("hi", "everyone!");
 
 io.sockets.on("connection", function(socket) {
-  socket.on("user", function(name) {
-    console.log(name + " connected");
-    users.push(name);
-    socket.user = name;
-    console.log("Current users : " + users.length);
-    socket.broadcast.emit("otherUserConnect", name);
+  socket.on("newGame", function() {
+    var randomCode = Math.floor(Math.random() * 8999) + 1000;
+    for (var i = 0; i < games.length; i++) {
+      if (games[i].code == randomCode) {
+        randomCode = Math.floor(Math.random() * 8999) + 1000;
+      }
+    }
+
+    games.push({
+      code: randomCode
+    });
+    console.log("New game created with code: " + randomCode);
+    socket.emit("newGameCreated", randomCode);
   });
 
   socket.on("disconnect", function() {
@@ -40,10 +42,10 @@ io.sockets.on("connection", function(socket) {
     }
   });
 
-  socket.on("message", function(data) {
-    io.sockets.emit("message", {
-      user: socket.user,
-      message: data
-    });
-  });
+  // socket.on("message", function(data) {
+  //   io.sockets.emit("message", {
+  //     user: socket.user,
+  //     message: data
+  //   });
+  // });
 });

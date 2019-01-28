@@ -1,10 +1,23 @@
 $(document).ready(function() {
   var socket = io.connect();
-  var name;
+
+  // Initial game selection (join vs new)
+  $("#newGameBtn").click(function() {
+    socket.emit("newGame");
+    $("#gameSelection").hide(1000);
+    $("#newGameMode").show(1000);
+  });
+
+  $("#joinGameBtn").click(function() {
+    $("#gameSelection").hide(1000);
+  });
+
+  socket.on("newGameCreated", function(props) {
+    $("#newGameCode").append("<div><strong>" + props + "</strong></div>");
+  });
 
   $("#user-save").click(function() {
-    console.log("click");
-    var username = $("#user-name");
+    var username = $("#gameCodeText");
     var txt = username.val().trim();
     console.log(txt);
     if (txt.length > 0) {
@@ -46,11 +59,5 @@ $(document).ready(function() {
       }
       input.val("");
     }
-  });
-
-  socket.on("message", function(data) {
-    $("#log").append(
-      "<div><strong>" + data.user + ":</strong> " + data.message + "</div>"
-    );
   });
 });

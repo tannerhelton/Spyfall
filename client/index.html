@@ -12,7 +12,23 @@
 <body>
     <div id="content">
         <center><h1>Spyfall</h1></center>
-        <hr>
+<hr>
+        <div id="gameSelection">
+          <button id="newGameBtn" class="btn btn-primary">New Game</button>
+          <button id="joinGameBtn" class="btn btn-primary">Join Game</button>
+        </div>
+
+        <div id="newGameMode">
+          <span id="newGameCode"></span>
+          <div class="input-group mb-3">
+            <input id="user-name" type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button id="" class="btn btn-outline-secondary" type="button">Button</button>
+            </div>
+          </div>
+
+        <!-- <hr>
+        <span id="gamecode"></span>
         <div id="user">
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Name: </span>
@@ -20,7 +36,7 @@
             </div>
         </div>
         <br>
-        <div id="gameCode">
+        <div id="gameCodeContainer">
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Game code: </span>
                 <input id="gameCodeText" type="text" class="form-control" placeholder="Game code" aria-describedby="basic-addon1">
@@ -44,6 +60,7 @@
             </div>
             <button id="send" class="btn btn-primary">Send</button>
         </div>
+        <button id="newGameBtn" class="btn btn-primary">New Game</button> -->
     </div>
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
