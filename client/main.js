@@ -1,5 +1,6 @@
 $(document).ready(function() {
   var socket = io.connect();
+  var gameId = 0;
 
   // Initial game selection (join vs new)
   $("#newGameBtn").click(function() {
@@ -8,11 +9,22 @@ $(document).ready(function() {
     $("#newGameMode").show(1000);
   });
 
+  $("#saveName").click(function() {
+    var name = $("#userName")
+      .val()
+      .trim();
+    if (name.length > 0) {
+      socket.emit("name", gameId, name);
+      $(".newGameInputContainer").prop("disabled", true);
+    }
+  });
+
   $("#joinGameBtn").click(function() {
     $("#gameSelection").hide(1000);
   });
 
   socket.on("newGameCreated", function(props) {
+    gameId = props;
     $("#newGameCode").append("<div><strong>" + props + "</strong></div>");
   });
 

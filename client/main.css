@@ -5,12 +5,12 @@
   color: #000000;
 }
 
-#gameSelection {
-  margin: auto;
-}
-
 #newGameMode {
   display: none;
+}
+
+/* #gameSelection {
+  margin: auto;
 }
 
 .msgLog {
@@ -30,4 +30,4 @@
 
 #controls {
   display: none;
-}
+} */
