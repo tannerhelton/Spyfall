@@ -20,7 +20,7 @@ io.sockets.on("connection", function(socket) {
     var randomCode = Math.floor(Math.random() * 8999) + 1000;
     for (var i = 0; i < games.length; i++) {
       if (games[i].code == randomCode) {
-        randomCode = Math.floor(Math.random() * 8999) + 1000;
+        alert("An error has occurred please refresh the page");
       }
     }
 
@@ -28,6 +28,7 @@ io.sockets.on("connection", function(socket) {
       code: randomCode
     });
     console.log("New game created with code: " + randomCode);
+    console.log("Number of games: " + games.length);
     socket.emit("newGameCreated", randomCode);
   });
 
