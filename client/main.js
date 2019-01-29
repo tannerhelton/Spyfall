@@ -33,7 +33,7 @@ $(document).ready(function() {
     if (gameId == gameIdCode) {
       users = userArray;
       console.log(users);
-      $("#usersTable").innerHTML = "";
+      $("#usersTable").innerHTML = "<h4>Users: </h4>";
       for (var i = 0; i < users.length; i++) {
         $("#usersTable").append("<p>" + users[i] + "</p>");
       }
