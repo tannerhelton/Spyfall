@@ -11,25 +11,28 @@ var server = http.listen(PORT, function() {
   console.log("Server listening on tannerhelton.com:" + PORT);
 });
 
-var games = [];
+var games = {};
 
 var io = require("socket.io").listen(server);
 
 io.sockets.on("connection", function(socket) {
   socket.on("newGame", function() {
-    var randomCode = Math.floor(Math.random() * 8999) + 1000;
-    for (var i = 0; i < games.length; i++) {
-      if (games[i].code == randomCode) {
-        alert("An error has occurred please refresh the page");
-      }
-    }
+    var gameCode = makeid(4);
+    games[gameCode] = {
+      code: gameCode,
+      users: []
+    };
+    console.log("New game created with code: " + gameCode);
+    socket.emit("newGameCreated", gameCode);
+  });
 
-    games.push({
-      code: randomCode
-    });
-    console.log("New game created with code: " + randomCode);
-    console.log("Number of games: " + games.length);
-    socket.emit("newGameCreated", randomCode);
+  socket.on("name", function(gameId, nameProp) {
+    if (games[gameId] != null) {
+      games[gameId].users.push(nameProp);
+      console.log("New User: " + nameProp + " added to game: " + gameId);
+      socket.emit("newUserConnected", gameId, games[gameId].users);
+      socket.broadcast.emit("newUserConnected", gameId, games[gameId].users);
+    }
   });
 
   socket.on("disconnect", function() {
@@ -50,3 +53,14 @@ io.sockets.on("connection", function(socket) {
   //   });
   // });
 });
+
+function makeid(strLength) {
+  var text = "";
+  var possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < strLength; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}

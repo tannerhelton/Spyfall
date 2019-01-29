@@ -1,6 +1,7 @@
 $(document).ready(function() {
   var socket = io.connect();
-  var gameId = 0;
+  var gameId = "";
+  var users = [];
 
   // Initial game selection (join vs new)
   $("#newGameBtn").click(function() {
@@ -26,6 +27,17 @@ $(document).ready(function() {
   socket.on("newGameCreated", function(props) {
     gameId = props;
     $("#newGameCode").append("<div><strong>" + props + "</strong></div>");
+  });
+
+  socket.on("newUserConnected", function(gameIdCode, userArray) {
+    if (gameId == gameIdCode) {
+      users = userArray;
+      console.log(users);
+      $("#usersTable").innerHTML = "";
+      for (var i = 0; i < users.length; i++) {
+        $("#usersTable").append("<p>" + users[i] + "</p>");
+      }
+    }
   });
 
   $("#user-save").click(function() {
