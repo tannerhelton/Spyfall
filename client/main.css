@@ -9,6 +9,10 @@
   display: none;
 }
 
+#joinGameMode {
+  display: none;
+}
+
 /* #gameSelection {
   margin: auto;
 }

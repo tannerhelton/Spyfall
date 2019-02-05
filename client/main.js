@@ -1,35 +1,62 @@
-$(document).ready(function() {
+$(document).ready(function () {
   var socket = io.connect();
   var gameId = "";
-  var users = [];
+  var players = [];
 
   // Initial game selection (join vs new)
-  $("#newGameBtn").click(function() {
+  $("#newGameBtn").click(function () {
     socket.emit("newGame");
     $("#gameSelection").hide(1000);
     $("#newGameMode").show(1000);
   });
 
-  $("#saveName").click(function() {
-    var name = $("#userName")
-      .val()
-      .trim();
-    if (name.length > 0) {
-      socket.emit("name", gameId, name);
-      $(".newGameInputContainer").prop("disabled", true);
+  socket.on('joinGameGetPlayers', function (gameIdArg, playersArg) {
+    if (gameIdArg == gameId) {
+      console.log(playersArg);
+      console.log(players);
+      players = playersArg;
+      $('.usersTable p').innerHTML = '';
+      for(var i = 0; i < players.length; i++) {
+        $('.usersTable').append('<p>' + players[i] + '</p>');
+      }
     }
   });
 
-  $("#joinGameBtn").click(function() {
+  $("#joinGameBtn").click(function () {
     $("#gameSelection").hide(1000);
+    $("#joinGameMode").show(1000);
   });
 
-  socket.on("newGameCreated", function(props) {
+  $("#saveGameId").click(function () {
+    var joinGameId = $("#joinGameId")
+      .val()
+      .trim();
+    var username = $("#joinUserName")
+      .val()
+      .trim();
+    if (username.length > 0) {
+      if (joinGameId.length == 4) {
+        socket.emit("joinGame", joinGameId, username);
+        $(".joinGameInputContainer").prop("disabled", true);
+        gameId = joinGameId;
+      } else {
+        alert("Please enter a valid game ID (4 characters)");
+      }
+    } else {
+      alert('Please enter a name first');
+    }
+  });
+
+  socket.on("errorMsg", function (props) {
+    alert(props);
+  });
+
+  socket.on("newGameCreated", function (props) {
     gameId = props;
     $("#newGameCode").append("<div><strong>" + props + "</strong></div>");
   });
 
-  socket.on("newUserConnected", function(gameIdCode, userArray) {
+  socket.on("newUserConnected", function (gameIdCode, userArray) {
     if (gameId == gameIdCode) {
       users = userArray;
       console.log(users);
@@ -40,32 +67,15 @@ $(document).ready(function() {
     }
   });
 
-  $("#user-save").click(function() {
-    var username = $("#gameCodeText");
-    var txt = username.val().trim();
-    console.log(txt);
-    if (txt.length > 0) {
-      name = txt;
-      username.prop("disabled", true);
-      $("#group").prop("disabled", true);
-      $(this).hide();
-      $("#controls").show();
-      $("#message").prop("disabled", false);
-      $("#send").prop("disabled", false);
-      socket.emit("user", name);
-      $("#usernames").append("<div><strong>" + name + "</strong></div>");
-    }
-  });
-
-  socket.on("otherUserConnect", function(data) {
+  socket.on("otherUserConnect", function (data) {
     $("#usernames").append("<div><strong>" + data + "</strong></div>");
   });
 
-  socket.on("otherUserDisconnect", function(data) {
+  socket.on("otherUserDisconnect", function (data) {
     $("#log").append("<div><strong>" + data + " disconnected</strong></div>");
   });
 
-  $("#send").click(function() {
+  $("#send").click(function () {
     var input = $("#message");
     var text = input.val().trim();
     if (text.length > 0) {
@@ -74,7 +84,7 @@ $(document).ready(function() {
     input.val("");
   });
 
-  $("#message").keypress(function(event) {
+  $("#message").keypress(function (event) {
     if (event.keyCode == 13 || event.which == 13) {
       var input = $("#message");
       var text = input.val().trim();
